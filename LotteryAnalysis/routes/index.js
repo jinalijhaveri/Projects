@@ -7,7 +7,7 @@ var fs  = require("fs");
 var http = require('http');
 var CronJob = require('cron').CronJob;
 
-new CronJob('* * * * * 4,6', function(){
+new CronJob('0 0 0 * * 4,6', function(){
     console.log('This job will run on every wed-sat');
     readFile();
 }, null, true,null);
