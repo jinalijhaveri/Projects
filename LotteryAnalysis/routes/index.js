@@ -5,32 +5,36 @@
 var dbconn = require('../model/dbconnection');
 var fs  = require("fs");
 var http = require('http');
+var CronJob = require('cron').CronJob;
+
+new CronJob('* * * * * 4,6', function(){
+    console.log('This job will run on every wed-sat');
+    readFile();
+}, null, true,null);
 
 exports.index = function(req, res){
-		//readFile();
-	 res.render('index');
-	
-};
-
-exports.showGraph = function(req, res){
-	dbconn.getFirstNumFrequency(function(err,rows){
-		  res.send(rows);
-	});	
-};
-
-exports.getMostFreqNums = function(req,res){
-	dbconn.getMostFreqNums(function(err,rows){
-		res.send(rows);
+	dbconn.getlastwinningnum(function(err,rows){
+			console.log(rows.length);
+			//readFile();
+		  res.render('index', {win:rows });
 	});
 };
 
-exports.duos=function(req,res){
-	dbconn.getduos(function(err,rows){
-		if(!err){
-			res.send(rows);
-		}
-	})
-}
+exports.getLowestNumFreq = function(req, res){
+	dbconn.getFirstNumFrequency(function(err,rows){
+			console.log(rows.length);
+		  res.send(rows);
+	});
+	
+};
+
+exports.getHighestNumFreq = function(req,res){
+    dbconn.getLastNumFrequency(function(err,rows){
+			console.log(rows);
+		  res.send(rows);
+	});
+};
+
 
 function readFile(){	
 	var file = fs.createWriteStream("lottery.txt");
@@ -62,41 +66,5 @@ function processData(){
 }
 
 
-exports.calcAvgWinDays = function(req,res)
-{
-	dbconn.getAllNums(function(rows){
-		console.log(rows);
-		var dataMap = {};
-		
-		var key;
-		var x;
-		for(var i=0;i<rows.length;i++)
-		{			
-			dataMap = createRecord(dataMap,rows[i],rows[i].num1);
-			dataMap = createRecord(dataMap,rows[i],rows[i].num2);
-			dataMap = createRecord(dataMap,rows[i],rows[i].num3);
-			dataMap = createRecord(dataMap,rows[i],rows[i].num4);
-			dataMap = createRecord(dataMap,rows[i],rows[i].num5);
-		}
-		console.log(dataMap);
-		res.send(dataMap);
-	});	
-}
 
 
-function createRecord(dataMap,currRow,key){
-	
-	var record;
-	record = dataMap[key];
-	if(typeof record != "undefined"){
-		record.cnt++
-		var diff = parseInt(record.id) - parseInt(currRow.drawId) - 1;
-		record.id = currRow.drawId;
-		record.days =  parseInt(record.days) +  parseInt(diff);
-	}
-	else{
-		
-		dataMap[key] =  { key : key,days : 0,cnt : 0,id:currRow.drawId};
-	}
-	return dataMap;
-}
