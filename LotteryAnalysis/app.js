@@ -3,11 +3,13 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
+var express = require('express')
+  , routes = require('./routes')
+  ,analysis = require('./routes/analysis')
+  , http = require('http')
+  , path = require('path')
+  , mysql = require('mysql')
+  , async = require('async');
 
 var app = express();
 
@@ -24,19 +26,56 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// development only
-if ('development' == app.get('env')) {
+app.configure('development', function() {
+  console.log('Using development settings.');
+  app.set('connection', mysql.createConnection({
+    host: '',
+    user: '',
+    port: '',
+    password: ''}));
   app.use(express.errorHandler());
-}
+});
+
+app.configure('production', function() {
+  console.log('Using production settings.');
+  app.set('connection', mysql.createConnection({
+    host: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    port: process.env.RDS_PORT}));
+});
+
+
+function init() {
 
 app.get('/', routes.index);
-app.get('/showGraph',routes.showGraph);
-app.get('/mostFreqNum',routes.getMostFreqNums);
-app.get('/showAverageDaysForWinNum',routes.calcAvgWinDays);
-app.get('/duos',routes.duos);
+app.get('/superLottoPlusPatterns' , analysis.patterns);
+app.get('/analysis' , analysis.analysis );
+app.get('/superPicks' , analysis.superPicks)
 
-app.get('/users', user.list);
+// Patterns Navigation
+
+app.get('/mostFreqNum',analysis.getMostFreqNums);
+app.get('/lowestNumFreq',routes.getLowestNumFreq);
+app.get('/highestNumFreq',routes.getHighestNumFreq);
+app.get('/avgDaysForWinNum',analysis.calcAvgWinDays);
+app.get('/get_row_difference' , analysis.get_row_difference);
+app.get('/duos' , analysis.duos ); // this is for megha's duo graph
+app.get('/gettrios_table' , analysis.gettrios_table);
+app.get('/showReatingnum',analysis.showReatingnum);
+app.get('/showConsecutiveNum',analysis.showConsecutiveNum);
+app.get('/oddEven',analysis.oddEven);
+
+
+
+
+// User Input Analysis Operations
+app.post('/get_numFreq_userInput' , analysis.get_numFreq_userInput ); 
+app.post('/get_duos_userInput' , analysis.get_duos_userInput ); 
+app.post('/userOddEven',analysis.userOddEven);
+app.post('/userPattern',analysis.userPattern);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+    console.log("Express server listening on port " + app.get('port'));
+  });
+}
