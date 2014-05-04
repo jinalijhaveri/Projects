@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>Try It Yourself</title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/carousel.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>  
+    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/queries.js" type="text/javascript"></script>
+
+    <!-- Custom styles for this template -->
+    <style id="holderjs-style" type="text/css"></style></head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+  
+    <% include Menu.ejs %>
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+        <div class="conainer">
+       <div class="row featurette">
+       <hr class="shadow">
+             <h3 class="featurette-head">Try It Yourself</h3>
+             <div class="well"> 
+                Words Can’t Describe What Lottery Win Means to a common man and we are here to help you making your dreams come true. With “Try it yourself” feature, you can 
+                enter 5 numbers and one mega number of your choice and we will analyze how best choice you have made. The analysis is based on patterns occurred in past draws.<br>
+                Number Range :- 1 to 47.
+                Mega Number Range : - 1 to 27
+            </div>
+            <div class="alert alert-danger" style="display:none" id="alertMsg"></div>
+          <!-- enter numbers here -->
+          <div class="col-lg-4">
+          <img class="img-circle" data-src="holder.js/100x100" alt="100x100" src="images/ball.png">
+          <hr><h2>Number 1</h2>
+           <input type="text" class="input-sm"  placeholder = "enter" id = "num1" maxlength="2"/>
+          <!-- textbox here -->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" data-src="holder.js/100x100" alt="100x100" src="images/ball.png">
+          <hr><h2>Number 2</h2>
+          <input type="text" class="input-sm"placeholder = "enter the number" id = "num2" maxlength="2"/>
+          <!-- textbox here -->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" data-src="holder.js/100x100" alt="100x100" src="images/ball.png">
+          <hr><h2>Number 3</h2>
+          <input type="text" class="input-sm"placeholder = "enter the number" id = "num3" maxlength="2"/>
+          <!-- textbox here -->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" data-src="holder.js/100x100" alt="100x100" src="images/ball.png">
+          <hr><h2>Number 4</h2>
+          <input type="text" class="input-sm"placeholder = "enter the number" id = "num4" maxlength="2"/>
+          <!-- textbox here -->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" data-src="holder.js/100x100" alt="100x100" src="images/ball.png">
+          <hr><h2>Number 5</h2>
+          <input type="text" class="input-sm"placeholder = "enter the number" id = "num5" maxlength="2"/>
+          <!-- textbox here -->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" data-src="holder.js/100x100" alt="100x100" src="images/megaball.png">
+          <hr><h2>Mega</h2>
+          <input type="text" class="input-sm"placeholder = "enter the number" id = "meganum" maxlength="2"/>
+          <!-- textbox here -->
+        </div><!-- /.col-lg-4 -->
+          
+        </div>
+        
+      </div>
+      </div>
+
+      <p></p>
+<hr>
+<div class="container" align="center">
+      <a class="btn btn-danger btn-lg" href="#" role="button" onclick = "allFuctions()">See Results</a>
+
+</div>
+      <hr class="featurette-divider">
+
+<div class="container" style="display:none" id="resultsDiv">
+
+        <div class="row featurette">
+        <div class="col-md-5" id="freqChart">
+          
+        </div>
+        <div class="col-md-7">
+           <div class="alert alert-info">This graph displays past frequency of your selected numbers. Some players believe the optimal approach to choosing winning numbers is to keep playing the numbers that appear the most.</div>
+            <!--<h3 class="featurette-heading">Your selected numbers past frequency graph.</h3>-->
+        </div>
+      </div>
+
+          <hr class="featurette-divider">
+      
+      <div class="row featurette">
+        <div class="col-md-7">
+          <div class="alert alert-info">This table displays past frequency of pairs of numbers. </div>
+        </div>
+        <div class="col-md-5" id="chart">
+          
+        </div>
+      </div>
+
+      
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="alert alert-info" id="userOddEven"></div>
+        <div class="col-md-7">
+         
+        </div>
+        <!--<div class="col-md-5" id="userOddEven">
+          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2VlZSI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjI1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjMxcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NTAweDUwMDwvdGV4dD48L3N2Zz4=">
+        </div>-->
+      </div>
+
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette" id="userPattern">
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="500x500" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI2VlZSI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjI1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjMxcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NTAweDUwMDwvdGV4dD48L3N2Zz4=">
+        </div>
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+          <p class="lead">pattern4</p>
+          <p><a class="btn btn-danger btn-lg" href="#" role="button">&laquo; View Graph</a></p>
+        </div>
+      </div>
+      <hr class="featurette-divider">
+
+     
+      <hr class="featurette-divider">
+
+    
+   <!-- /END THE FEATURETTES -->
+
+
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <!--<p>Team 15. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>-->
+      </footer>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+   
+</body></html>
