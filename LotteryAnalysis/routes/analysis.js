@@ -5,39 +5,6 @@ var mysql=require('mysql');
 
 
 
-/*var getduos = function(req , res){
-	console.log("in the get duos of analysis");
-	dbconn.getduos(function(err , rows){
-		console.log("length " + rows.length);
-		res.send(rows);
-	})
-}*/
-
-/*var getduos_table = function(req , res){
-	console.log("in the get duos of analysis");
-	dbconn.getduos_table(function(err , rows){
-		console.log("length " + rows.length);
-		res.send(rows);
-	})
-}*/
-
-
-
-
-/*var insert_row_difference = function(req , res){
-	dbconn.get_row_difference(function(diff1,diff2,diff3,diff4,diff5){
-		for(var i = 0 ; i < diff1.length ; i++){
-			var query1 = "insert into row_differences (col1 , col2 , col3 , col4 , col5) values ("+diff1[i]+","+diff2[i]+","+diff3[i]+","+diff4[i]+","+diff5[i]+")"
-		 connection.query(query1 , function(err){
-			 if(err){
-				 console.log("error in inserting difference");
-			 }
-		 }) 
-			console.log("diff1 "+diff1[i]+" diff2 "+diff2[i]+" diff3 "+diff3[i]+" diff4 "+diff4[i]);
-		}
-		
-	})
-}*/
 
 var insert_row_difference = function(req , res){
 	dbconn.create_row_difference(function(diff1,diff2,diff3,diff4,diff5,date){
