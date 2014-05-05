@@ -9,15 +9,15 @@ Increase your chance of a milion dollar hit.... The historical occurence of numb
 
 ## Implemented Patterns :-
 
-Most Frequent Numbers
-Lowest/Highest Numbers Frequency
-Average no of Draws between wins
-Odd/Even Pattern
-Most Frequenct Winning Pairs
-Winning Triples
-Repeatation Pattern Analysis
-Consecutive Number Analysis
-Row Difference Pattern
+Most Frequent Numbers | 
+Lowest/Highest Numbers Frequency | 
+Average no of Draws between wins | 
+Odd/Even Pattern | 
+Most Frequenct Winning Pairs | 
+Winning Triples | 
+Repeatation Pattern Analysis | 
+Consecutive Number Analysis | 
+Row Difference Pattern | 
 
 ### Technology Stack
 
