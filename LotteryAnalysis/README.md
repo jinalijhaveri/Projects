@@ -21,9 +21,9 @@ Row Difference Pattern |
 
 ### Technology Stack
 
-Web Server - Node.js
-Relational DB - MySql
-Graph Library - d3js
-CSS - bootstrap
+Web Server - Node.js | 
+Relational DB - MySql | 
+Graph Library - d3js | 
+CSS - bootstrap | 
 
 
